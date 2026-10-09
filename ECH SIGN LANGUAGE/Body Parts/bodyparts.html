@@ -1,0 +1,82 @@
+<html>
+    <head>
+        <title>Body Parts</title>
+        <link rel="stylesheet" href="style1.css">
+    </head>
+    <body>
+        <header>
+            <h1>Body Parts</h1>
+              <nav class="nav">
+            <a href="file:///C:/Users/TCP/Desktop/ECH/ECH%20SIGN%20LANGUAGE/SIGN.html">HOME</a>
+            <a href="#"></a>
+            <a href="#"></a>
+            
+         </nav>
+        </header>
+        <marquee type="scroll">Empower communication through hands learn Indians and language</marquee>
+        <section class="image-gallery">
+            <div class="image-box">
+                <img src="Arm.jpg" alt="Arm" onmouseover="playSound('Arm')">
+                <h3>Arm</h3>
+            </div>
+                <div class="image-box">
+                <img src="Chest.jpg" alt="Chest" onmouseover="playSound('Chest')">
+                <h3>Chest</h3>
+            </div>
+            <div class="image-box">
+                <img src="Ear.jpg" alt="Ear" onmouseover="playSound('Ear')">
+                <h3>Ear</h3>
+            </div>
+            <div class="image-box">
+                <img src="Elbow.jpg" alt="Elbow" onmouseover="playSound('Elbow')">
+                <h3>Elbow</h3>
+            </div>
+            <div class="image-box">
+                <img src="Eye.jpg" alt="Eye" onmouseover="playSound('Eye')">
+                <h3>Eye</h3>
+            </div>
+            <div class="image-box">
+                <img src="Finger.jpg" alt="Finger" onmouseover="playSound('Finger')">
+                <h3>Finger</h3>
+            </div>
+            <div class="image-box">
+                <img src="Foot.jpg" alt="Foot" onmouseover="playSound('Foot')">
+                <h3>Foot</h3>
+            </div>
+            <div class="image-box">
+                <img src="Hair.jpg" alt="Hair" onmouseover="playSound('Hair')">
+                <h3>Hair</h3>
+            </div>
+            <div class="image-box">
+                <img src="Head.jpg" alt="Head" onmouseover="playSound('Head')">
+                <h3>Head</h3>
+            </div>
+            <div class="image-box">
+                <img src="Leg.jpg" alt="Leg" onmouseover="playSound('Leg')">
+                <h3>Leg</h3>
+            </div>
+            <div class="image-box">
+                <img src="Mouth.jpg" alt="Mouth" onmouseover="playSound('Mouth')">
+                <h3>Mouth</h3>
+            </div>
+            <div class="image-box">
+                <img src="Nose.jpg" alt="Nose" onmouseover="playSound('Nose')">
+                <h3>Nose</h3>
+            </div>
+            <div class="image-box">
+                <img src="Teeth.jpg" alt="Teeth" onmouseover="playSound('Teeth')">
+                <h3>Teeth</h3>
+            </div>
+           
+        </section>
+        <audio id="alphabetAudio"></audio>
+
+        <script>
+            function playSound(letter) {
+                let audio = document.getElementById("alphabetAudio");
+                audio.src = letter + ".mp3";   // Corrected line
+                audio.play();
+            }
+        </script>
+    </body>
+</html>

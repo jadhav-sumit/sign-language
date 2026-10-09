@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Scalar Multiplication</title>
+<style>
+body{font-family:Arial; background:#eef2f3;}
+.container{width:90%; max-width:700px; margin:40px auto; padding:20px; border-radius:12px; background:#fff; box-shadow:0 0 10px #0002;}
+h1{text-align:center;}
+input{width:80px; padding:8px; margin:5px; border-radius:6px; border:1px solid #aaa;}
+button{padding:10px 20px; background:#4caf50; color:white; border-radius:8px; border:none; cursor:pointer;}
+button:hover{background:#2e7d32;}
+.matrix-row{display:flex; justify-content:center;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Scalar Multiplication</h1>
+
+<form method="POST" action="/scalar">
+    <h3>Enter Scalar Value:</h3>
+    <input type="number" name="scalar" required>
+
+    <h3>Matrix</h3>
+    <div id="matrix"></div>
+
+    <br>
+    <button type="submit">Multiply</button>
+</form>
+</div>
+
+<script>
+const rows = 3, cols = 3;
+
+let html = "";
+for (let r = 0; r < rows; r++) {
+    html += "<div class='matrix-row'>";
+    for (let c = 0; c < cols; c++) {
+        html += `<input type='number' name='m${r}${c}' required>`;
+    }
+    html += "</div>";
+}
+document.getElementById("matrix").innerHTML = html;
+</script>
+
+</body>
+</html>

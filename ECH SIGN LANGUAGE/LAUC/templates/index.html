@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Matrix Multiplication</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='style6.css') }}">
+
+    <script>
+        function generateInputs() {
+            let rowsA = document.getElementById("rowsA").value;
+            let colsA = document.getElementById("colsA").value;
+            let rowsB = document.getElementById("rowsB").value;
+            let colsB = document.getElementById("colsB").value;
+
+            let Adiv = document.getElementById("matrixA");
+            let Bdiv = document.getElementById("matrixB");
+
+            // Clear
+            Adiv.innerHTML = "";
+            Bdiv.innerHTML = "";
+
+            // Create Matrix A inputs
+            Adiv.innerHTML += "<h3>Matrix A</h3>";
+            for (let i = 0; i < rowsA; i++) {
+                for (let j = 0; j < colsA; j++) {
+                    Adiv.innerHTML += `<input name="A_${i}_${j}" required>`;
+                }
+                Adiv.innerHTML += "<br>";
+            }
+
+            // Create Matrix B inputs
+            Bdiv.innerHTML += "<h3>Matrix B</h3>";
+            for (let i = 0; i < rowsB; i++) {
+                for (let j = 0; j < colsB; j++) {
+                    Bdiv.innerHTML += `<input name="B_${i}_${j}" required>`;
+                }
+                Bdiv.innerHTML += "<br>";
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div class="container">
+<h1>Matrix Multiplication Tool</h1>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+
+    <h3>Enter Matrix Sizes</h3>
+
+    Rows(A): <input type="number" name="rowsA" id="rowsA" required>
+    Cols(A): <input type="number" name="colsA" id="colsA" required><br><br>
+
+    Rows(B): <input type="number" name="rowsB" id="rowsB" required>
+    Cols(B): <input type="number" name="colsB" id="colsB" required><br><br>
+
+    <button type="button" onclick="generateInputs()">Generate Matrix Inputs</button>
+
+    <div id="matrixA" class="matrix"></div>
+    <div id="matrixB" class="matrix"></div>
+
+    <button type="submit">Multiply</button>
+</form>
+
+{% if C %}
+<h3>Result (A × B)</h3>
+<table>
+    {% for row in C %}
+    <tr>
+        {% for value in row %}
+        <td>{{ value }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</div>
+</body>
+
+</html>

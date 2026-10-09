@@ -1,0 +1,131 @@
+/* ===== GLOBAL STYLING ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
+    color: #222;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: rgba(255, 255, 255, 0.9);
+    text-align: center;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    color: #1a1a2e;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+/* ===== MAIN CONTENT ===== */
+.content {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ===== SECTIONS ===== */
+div > p, ol, ul {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+div > p:hover, ol:hover, ul:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* ===== HEADINGS ===== */
+h2, h3 {
+    color: #0f3460;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 22px;
+}
+
+/* ===== LISTS ===== */
+ul, ol {
+    margin: 10px 0 10px 25px;
+    color: #162447;
+}
+
+ul li, ol li {
+    margin-bottom: 8px;
+}
+
+/* ===== IMAGES ===== */
+img {
+    display: block;
+    width: 400px;       /* medium size */
+    height: auto;
+    margin: 15px auto;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* ===== FOOTER ===== */
+.FOOTER {
+    background: rgba(255,255,255,0.9);
+    text-align: center;
+    padding: 15px 0;
+    font-weight: 600;
+    color: #1a1a2e;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    img {
+        width: 90%;
+        height: auto;
+    }
+
+    div > p, ol, ul {
+        padding: 15px;
+    }
+}

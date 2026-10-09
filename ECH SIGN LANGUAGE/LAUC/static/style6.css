@@ -1,0 +1,183 @@
+/* ---------------- GLOBAL ---------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 40px;
+    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+    background-size: 300% 300%;
+    animation: bgMove 12s ease infinite;
+    min-height: 100vh;
+    color: #fff;
+}
+
+/* Animated background gradient */
+@keyframes bgMove {
+    0% { background-position: 0% 30%; }
+    50% { background-position: 100% 70%; }
+    100% { background-position: 0% 30%; }
+}
+
+/* Center card container */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 35px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+    animation: fadeIn 0.7s ease;
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* Smooth fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------------- HEADINGS ---------------- */
+
+h1 {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: 0 0 15px rgba(255,255,255,0.6);
+    margin-bottom: 30px;
+}
+
+h3 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ffebd6;
+}
+
+/* ---------------- INPUT FIELDS ---------------- */
+
+input {
+    padding: 12px;
+    width: 80px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background: rgba(255, 255, 255, 0.20);
+    color: #fff;
+    font-size: 16px;
+    margin: 6px;
+    outline: none;
+    transition: 0.3s;
+    text-align: center;
+}
+
+/* Glow and scale on focus */
+input:focus {
+    background: rgba(255, 255, 255, 0.30);
+    border-color: #fff;
+    box-shadow: 0 0 12px #ffffffaa;
+    transform: scale(1.07);
+}
+
+/* ---------------- MATRIX BOX ---------------- */
+
+.matrix {
+    margin-top: 25px;
+    padding: 18px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 15px;
+    animation: fadeIn 0.4s ease;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+/* ---------------- BUTTONS ---------------- */
+
+button {
+    display: block;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #ffffffaa, #ffffff);
+    border: none;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 20px auto;
+    color: #222;
+    transition: 0.35s;
+    letter-spacing: 0.4px;
+}
+
+/* Hover glow + lift */
+button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 18px rgba(0,0,0,0.25),
+                0 0 12px rgba(255,255,255,0.8);
+}
+
+/* Click shrink */
+button:active {
+    transform: scale(0.95);
+}
+
+/* ---------------- ERROR MESSAGE ---------------- */
+
+.error {
+    text-align: center;
+    background: rgba(255, 40, 40, 0.7);
+    padding: 12px;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    animation: shake 0.3s ease;
+}
+
+/* Shake animation for error */
+@keyframes shake {
+    0% { transform: translateX(0px); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0px); }
+}
+
+/* ---------------- RESULT TABLE ---------------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 25px;
+    animation: fadeIn 0.7s ease;
+}
+
+td {
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,0.4);
+    text-align: center;
+    font-size: 18px;
+    background: rgba(255,255,255,0.15);
+    transition: 0.25s;
+}
+
+/* Hover highlight */
+td:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+    backdrop-filter: blur(4px);
+}
+
+/* ---------------- INPUT ROW AREA ---------------- */
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Floating glow effect on matrix inputs */
+.matrix input:hover {
+    box-shadow: 0 0 10px rgba(255,255,255,0.7);
+    transform: scale(1.05);
+}

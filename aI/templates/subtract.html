@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Matrix Subtraction</title>
+<style>
+/* same CSS as addition */
+body {font-family: Arial; background:#f4f6f9;}
+.container {width:90%; max-width:700px; margin:40px auto; padding:20px; background:#fff; border-radius:12px; box-shadow:0 0 10px #0002;}
+h1{text-align:center;}
+input{width:60px; padding:8px; margin:5px; font-size:16px; border-radius:6px; border:1px solid #aaa;}
+button{padding:10px 20px; background:#ff5722; color:white; border-radius:8px; border:none; cursor:pointer;}
+button:hover{background:#d84315;}
+.matrix-row{display:flex; justify-content:center;}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Matrix Subtraction</h1>
+
+    <form method="POST" action="/sub">
+        <h3>Matrix A</h3>
+        <div id="matrixA"></div>
+
+        <h3>Matrix B</h3>
+        <div id="matrixB"></div>
+
+        <br>
+        <button type="submit">Subtract</button>
+    </form>
+</div>
+
+<script>
+const rows = 3, cols = 3;
+
+function createMatrix(id) {
+    let html = "";
+    for (let r = 0; r < rows; r++) {
+        html += "<div class='matrix-row'>";
+        for (let c = 0; c < cols; c++) {
+            html += `<input type='number' name='${id}${r}${c}' required>`;
+        }
+        html += "</div>";
+    }
+    document.getElementById(id).innerHTML = html;
+}
+
+createMatrix("matrixA");
+createMatrix("matrixB");
+</script>
+
+</body>
+</html>

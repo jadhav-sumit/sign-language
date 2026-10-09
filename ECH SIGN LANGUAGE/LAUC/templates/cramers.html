@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cramer's Rule Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style11.css') }}">
+</head>
+
+<body>
+
+    <h1>✨ Cramer's Rule Solver (3×3) ✨</h1>
+
+    <div class="container">
+
+        <!-- Form -->
+        <form method="POST" action="{{ url_for('cramer') }}">
+
+            <div class="matrix-wrapper">
+
+                <!-- MATRIX A -->
+                <div class="matrix-box">
+                    <h3>Matrix A (3 × 3)</h3>
+                    <div class="matrixA-grid">
+                        {% for i in range(3) %}
+                            {% for j in range(3) %}
+                                <input type="number" step="any" name="A_{{i}}_{{j}}" required>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- MATRIX B -->
+                <div class="matrix-box">
+                    <h3>Matrix B (3 × 1)</h3>
+                    <div class="matrixB-grid">
+                        {% for i in range(3) %}
+                            <input type="number" step="any" name="B_{{i}}" required>
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+
+            <button class="solve-btn" type="submit">Solve</button>
+
+        </form>
+
+        <!-- Error Message -->
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <!-- Results -->
+        {% if detA is not none and not error %}
+        <div class="result-box">
+            <h2>Results</h2>
+            <p>Determinant (A): <b>{{ detA }}</b></p>
+            <p>x: <b>{{ x }}</b></p>
+            <p>y: <b>{{ y }}</b></p>
+            <p>z: <b>{{ z }}</b></p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matrix Subtraction</title>
+    <link rel="stylesheet" href="/static/style10.css">
+</head>
+<body>
+
+<div class="container fade-in">
+
+    <h1 class="title">Matrix Subtraction (A - B)</h1>
+
+   <form method="POST" action="/subtract">
+
+
+        <div class="card">
+            <h2>Enter Matrix Size</h2>
+
+            <label>Rows:</label>
+            <input type="number" name="rows" min="1" max="10" required>
+
+            <label>Columns:</label>
+            <input type="number" name="cols" min="1" max="10" required>
+
+            <button type="button" onclick="generateMatrixInputs()">Generate Matrices</button>
+        </div>
+
+        <div id="matrix-area"></div>
+
+        <button id="submit-btn" type="submit" class="solve-btn" style="display:none;">
+            Subtract (A - B)
+        </button>
+
+    </form>
+
+    {% if C %}
+    <div class="result fade-in">
+        <h2 class="section-title">Result (A - B)</h2>
+
+        <div class="matrix-card">
+            <table>
+                {% for row in C %}
+                <tr>
+                    {% for val in row %}
+                    <td class="result-box">{{ val }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+<script>
+function generateMatrixInputs() {
+    let rows = document.querySelector("input[name='rows']").value;
+    let cols = document.querySelector("input[name='cols']").value;
+
+    if (!rows || !cols) {
+        alert("Enter valid size!");
+        return;
+    }
+
+    let area = document.getElementById("matrix-area");
+    area.innerHTML = "";
+
+    area.innerHTML += `<h2 class='section-title slide-up'>Matrix A</h2>`;
+    area.innerHTML += createTable("A", rows, cols);
+
+    area.innerHTML += `<h2 class='section-title slide-up'>Matrix B</h2>`;
+    area.innerHTML += createTable("B", rows, cols);
+
+    document.getElementById("submit-btn").style.display = "block";
+}
+
+function createTable(prefix, rows, cols) {
+    let html = `<div class='matrix-card fade-in'><table>`;
+    for (let i = 0; i < rows; i++) {
+        html += "<tr>";
+        for (let j = 0; j < cols; j++) {
+            html += `<td><input class='matrix-input' name='${prefix}${i}${j}' type='number' required></td>`;
+        }
+        html += "</tr>";
+    }
+    html += "</table></div>";
+    return html;
+}
+</script>
+
+</body>
+</html>

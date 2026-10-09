@@ -1,0 +1,119 @@
+body {
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    margin: 0;
+    padding: 0;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* CONTAINER */
+.container {
+    width: 85%;
+    margin: 40px auto;
+    text-align: center;
+}
+
+/* TITLE */
+.title {
+    font-size: 38px;
+    text-shadow: 0 0 15px cyan;
+    margin-bottom: 20px;
+    animation: fadein 1s ease-in-out;
+}
+
+/* CARD BOX */
+.card {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 25px;
+    margin-top: 20px;
+    border-radius: 18px;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.25);
+    animation: slide 0.7s ease-out;
+}
+
+/* LABEL */
+.label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* INPUT */
+.input {
+    padding: 12px;
+    margin: 10px;
+    font-size: 16px;
+    width: 180px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input:focus {
+    box-shadow: 0 0 12px cyan;
+}
+
+/* BUTTON */
+.btn {
+    margin-top: 15px;
+    padding: 12px 22px;
+    background: linear-gradient(45deg, cyan, #00eaff);
+    border: none;
+    color: black;
+    font-size: 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.3s;
+    font-weight: bold;
+}
+
+.btn:hover {
+    transform: scale(1.07);
+    box-shadow: 0 0 15px cyan;
+}
+
+/* MATRIX GRID */
+.matrix-grid .row {
+    margin: 8px 0;
+}
+
+/* MATRIX INPUTS */
+.matrix-input {
+    width: 90px;
+    padding: 10px;
+    margin: 4px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 17px;
+    transition: 0.2s;
+}
+
+.matrix-input:focus {
+    box-shadow: 0 0 12px #00eaff;
+}
+
+/* RESULT STYLING */
+.result-cell {
+    display: inline-block;
+    padding: 12px 20px;
+    margin: 4px;
+    background: rgba(0, 255, 255, 0.15);
+    border-radius: 10px;
+    font-size: 18px;
+    box-shadow: 0 0 12px cyan;
+}
+
+/* ANIMATIONS */
+@keyframes fadein {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}

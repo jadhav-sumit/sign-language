@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>FRUITS</title>
+        <link rel="stylesheet" href="style4.css">
+    </head>
+    <body>
+        <header>
+            <h1>Fruits</h1>
+              <nav class="nav">
+            <a href="file:///C:/Users/TCP/Desktop/ECH/ECH%20SIGN%20LANGUAGE/SIGN.html">HOME</a>
+            <a href="#"></a>
+            <a href="#"></a>
+            
+         </nav>
+        </header>
+        <marquee type="scroll">Empower communication through hands learn Indians and language</marquee>
+        <section class="image-gallery">
+            <div class="image-box">
+                <img src="Apple.jpeg" alt="A"onmouseover="playSound('Apple')" >
+                <h3>Apple</h3>
+            </div>
+                <div class="image-box">
+                <img src="Banana.jpeg" alt="B" onmouseover="playSound('Banana')">
+                <h3>Banana</h3>
+            </div>
+            <div class="image-box">
+                <img src="Blackberry.jpeg" alt="C" onmouseover="playSound('Blackberry')">
+                <h3>Blackberry</h3>
+            </div>
+            <div class="image-box">
+                <img src="Blueberry.jpeg" alt="D" onmouseover="playSound('Blueberry')">
+                <h3>Blueberry</h3>
+            </div>
+            <div class="image-box">
+                <img src="Cheary.jpeg" alt="E" onmouseover="playSound('Cheary')">
+                <h3>Cheary</h3>
+            </div>
+            <div class="image-box">
+                <img src="Desert.jpeg" alt="F" onmouseover="playSound('Desert')">
+                <h3>Desert</h3>
+            </div>
+            <div class="image-box">
+                <img src="Grapes.jpeg" alt="G" onmouseover="playSound('Grapes')">
+                <h3>Grapes</h3>
+            </div>
+            <div class="image-box">
+                <img src="orange.jpeg" alt="H" onmouseover="playSound('Orange')">
+                <h3>orange</h3>
+            </div>
+            <div class="image-box">
+                <img src="Peach.jpeg" alt="I" onmouseover="playSound('Peach')">
+                <h3>Peach</h3>
+            </div>
+            <div class="image-box">
+                <img src="Pear.jpeg" alt="J" onmouseover="playSound('Pear')">
+                <h3>Pear</h3>
+            </div>
+            <div class="image-box">
+                <img src="Pineapple.jpeg" alt="K" onmouseover="playSound('Pineapple')">
+                <h3>Pineapple</h3>
+            </div>
+            <div class="image-box">
+                <img src="Pumpkin.jpeg" alt="L" onmouseover="playSound('Pumpkin')">
+                <h3>Pumpkin</h3>
+            </div>
+            <div class="image-box">
+                <img src="Strawberry.jpeg" alt="M" onmouseover="playSound('Strawberry')">
+                <h3>Strawberry</h3>
+            </div>
+            <div class="image-box">
+                <img src="Watermelon.jpeg" alt="N" onmouseover="playSound('Watermelon')">
+                <h3>Watermelon</h3>
+            </div>
+            
+
+        </section>
+         <audio id="alphabetAudio"></audio>
+        <script>
+        function playSound(letter) {
+            let audio = document.getElementById("alphabetAudio");
+            audio.src = letter + ".mp3";  // A.mp3, B.mp3…
+            audio.play();
+        }
+    </script>
+
+    </body>
+</html>

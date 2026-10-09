@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Rank of Matrix Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Rank of Matrix Calculator</h2>
+
+  <label>Enter number of rows (m): </label>
+  <input type="number" id="rows" min="1">
+  <br><br>
+
+  <label>Enter number of columns (n): </label>
+  <input type="number" id="cols" min="1">
+  <br><br>
+
+  <button onclick="createMatrix()">Create Matrix</button>
+
+  <div id="matrixBox"></div>
+
+  <h3 id="output"></h3>
+
+</div>
+
+<script>
+// Create matrix input boxes dynamically
+function createMatrix() {
+    const r = parseInt(document.getElementById("rows").value);
+    const c = parseInt(document.getElementById("cols").value);
+
+    if (!r || !c || r <= 0 || c <= 0) {
+        alert("Invalid matrix size!");
+        return;
+    }
+
+    const box = document.getElementById("matrixBox");
+    box.innerHTML = "<h3>Enter Matrix Elements:</h3>";
+
+    let table = "<table>";
+    for (let i = 0; i < r; i++) {
+        table += "<tr>";
+        for (let j = 0; j < c; j++) {
+            table += `<td><input type='number' step='any' id='cell-${i}-${j}'></td>`;
+        }
+        table += "</tr>";
+    }
+    table += "</table>";
+    box.innerHTML += table;
+    box.innerHTML += `<br><button onclick="solveRank()">Find Rank</button>`;
+}
+
+// Collect matrix and send to backend
+function solveRank() {
+    const r = parseInt(document.getElementById("rows").value);
+    const c = parseInt(document.getElementById("cols").value);
+
+    const matrix = [];
+    for (let i = 0; i < r; i++) {
+        const row = [];
+        for (let j = 0; j < c; j++) {
+            const val = document.getElementById(`cell-${i}-${j}`).value;
+            row.push(val === "" ? 0 : parseFloat(val));
+        }
+        matrix.push(row);
+    }
+
+    fetch("/rank", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matrix: matrix })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.rank !== undefined) {
+            document.getElementById("output").style.display = "block";
+            document.getElementById("output").innerHTML = "Rank of Matrix = <b>" + data.rank + "</b>";
+        } else if (data.error) {
+            document.getElementById("output").style.display = "block";
+            document.getElementById("output").innerText = "Error: " + data.error;
+        }
+    })
+    .catch(error => {
+        document.getElementById("output").style.display = "block";
+        document.getElementById("output").innerText = "Error: " + error;
+    });
+}
+</script>
+
+</body>
+</html>

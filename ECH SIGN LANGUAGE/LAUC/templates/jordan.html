@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gauss Jordan Calculator</title>
+    <link rel="stylesheet" href="/static/style19.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Gauss–Jordan Elimination (RREF)</h1>
+
+    <form id="gjForm">
+        <label>Enter Matrix Rows (space-separated):</label>
+
+        <textarea name="matrix" required placeholder="2 1 -1 8"></textarea>
+        <textarea name="matrix" required placeholder="-3 -1 2 -11"></textarea>
+        <textarea name="matrix" required placeholder="-2 1 2 -3"></textarea>
+
+        <button type="submit">Calculate RREF</button>
+    </form>
+
+    <div id="output"></div>
+</div>
+
+
+<script>
+    document.getElementById("gjForm").onsubmit = async (e) => {
+        e.preventDefault();
+
+        let form = new FormData(e.target);
+
+        let res = await fetch("/solve", {
+            method: "POST",
+            body: form
+        });
+
+        let data = await res.json();
+
+        let out = document.getElementById("output");
+
+        if (data.error) {
+            out.innerHTML = `<p class='error'>${data.error}</p>`;
+            return;
+        }
+
+        let html = "<h2>RREF Result</h2><table>";
+
+        data.result.forEach(row => {
+            html += "<tr>";
+            row.forEach(v => html += `<td>${v.toFixed(3)}</td>`);
+            html += "</tr>";
+        });
+
+        html += "</table>";
+        out.innerHTML = html;
+    }
+</script>
+
+</body>
+</html>

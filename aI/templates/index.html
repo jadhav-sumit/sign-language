@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧮 Matrix Calculator</h1>
+            <p>Perform various matrix operations including Cramer's Rule, Gauss Elimination, and more</p>
+        </div>
+        
+        <div class="main">
+            <div class="sidebar">
+                <!-- Matrix Size Controls -->
+                <div class="section">
+                    <h3>📐 Matrix Size</h3>
+                    <div class="size-control">
+                        <div class="matrix-size">
+                            <h4>Matrix A</h4>
+                            <div class="inputs">
+                                <div class="input-group">
+                                    <label>Rows:</label>
+                                    <input type="number" id="rowsA" min="1" max="6" value="3">
+                                </div>
+                                <div class="input-group">
+                                    <label>Cols:</label>
+                                    <input type="number" id="colsA" min="1" max="6" value="3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="matrix-size">
+                            <h4>Matrix B</h4>
+                            <div class="inputs">
+                                <div class="input-group">
+                                    <label>Rows:</label>
+                                    <input type="number" id="rowsB" min="1" max="6" value="3">
+                                </div>
+                                <div class="input-group">
+                                    <label>Cols:</label>
+                                    <input type="number" id="colsB" min="1" max="6" value="3">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Operations -->
+                <div class="section">
+                    <h3>⚙️ Operations</h3>
+                    
+                    <!-- Group 1: Rank & Determinant -->
+                    <div class="operation-group">
+                        <h4>🔢 Matrix Properties</h4>
+                        <button class="btn" data-op="rank">Rank</button>
+                        <button class="btn" data-op="determinant">Determinant</button>
+                    </div>
+                    
+                    <!-- Group 2: Minor & Cofactor -->
+                    <div class="operation-group">
+                        <h4>🔍 Element Properties</h4>
+                        <button class="btn" data-op="minor">Minor</button>
+                        <button class="btn" data-op="cofactor">Cofactor</button>
+                    </div>
+                    
+                    <!-- Group 3: Basic Operations -->
+                    <div class="operation-group">
+                        <h4>➕ Basic Operations</h4>
+                        <button class="btn" data-op="addition">Addition (A+B)</button>
+                        <button class="btn" data-op="subtraction">Subtraction (A-B)</button>
+                    </div>
+                    
+                    <!-- Group 4: Linear Equations -->
+                    <div class="operation-group">
+                        <h4>📈 Linear Equations</h4>
+                        <button class="btn" data-op="cramer">Cramer's Rule</button>
+                        <button class="btn" data-op="gauss">Gauss Elimination</button>
+                        <button class="btn" data-op="gauss_jordan">Gauss-Jordan</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Matrix Inputs -->
+                <div class="matrix-section">
+                    <div class="matrix-input">
+                        <h3>Matrix A <span class="size-label" id="sizeLabelA">3×3</span></h3>
+                        <div id="matrixA" class="matrix-grid"></div>
+                    </div>
+                    
+                    <div class="matrix-input">
+                        <h3>Matrix B <span class="size-label" id="sizeLabelB">3×3</span></h3>
+                        <div id="matrixB" class="matrix-grid"></div>
+                        <div class="hint">For equations: Enter constants as column vector</div>
+                    </div>
+                </div>
+                
+                <!-- Result Display -->
+                <div class="result-section">
+                    <h3>📊 Result</h3>
+                    <div id="result" class="result-box">
+                        <div class="placeholder">
+                            <div class="icon">↑</div>
+                            <p>Select an operation to see results</p>
+                        </div>
+                    </div>
+                    
+                    <div id="steps" class="steps-box" style="display: none;">
+                        <h4>📝 Solution Steps</h4>
+                        <div id="stepsContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

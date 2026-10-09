@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Gauss Elimination</title>
+<style>
+body{font-family:Arial; background:#f1f4ff;}
+.container{width:90%; max-width:700px; margin:40px auto; background:white; padding:20px; border-radius:12px; box-shadow:0 0 10px #0003;}
+h1{text-align:center;}
+input{width:80px; padding:8px; margin:5px; border-radius:6px; border:1px solid #aaa;}
+button{padding:12px 20px; background:#673ab7; border:none; color:white; border-radius:8px;}
+button:hover{background:#512da8;}
+.matrix-row{display:flex; justify-content:center;}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Gauss Elimination</h1>
+
+<form method="POST" action="/gauss">
+    <h3>Enter Augmented Matrix (Ax = b)</h3>
+    <div id="matrix"></div>
+
+    <br>
+    <button type="submit">Solve</button>
+</form>
+
+</div>
+
+<script>
+const rows = 3, cols = 4;
+
+let html = "";
+for (let r = 0; r < rows; r++) {
+    html += "<div class='matrix-row'>";
+    for (let c = 0; c < cols; c++) {
+        html += `<input type='number' name='m${r}${c}' required>`;
+    }
+    html += "</div>";
+}
+document.getElementById("matrix").innerHTML = html;
+</script>
+
+</body>
+</html>

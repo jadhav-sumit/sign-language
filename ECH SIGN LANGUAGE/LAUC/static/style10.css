@@ -1,0 +1,124 @@
+/* ---------- GLOBAL ---------- */
+body {
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(135deg, #0f0f3d, #1b1b5e);
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* ---------- ANIMATIONS ---------- */
+.fade-in {
+    animation: fade 0.8s ease-in-out;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+    animation: slideUp 1s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- TITLES ---------- */
+.title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff758c, #ff7eb3);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+/* ---------- CARD ---------- */
+.card, .matrix-card {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
+    transition: 0.3s ease;
+}
+
+.card:hover, .matrix-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(255,255,255,0.2);
+}
+
+.section-title {
+    margin-top: 15px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* ---------- INPUTS ---------- */
+input, button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+input {
+    width: 80px;
+    text-align: center;
+}
+
+.matrix-input {
+    width: 70px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #ffffff22;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.matrix-input:focus {
+    border-color: #ff7eb3;
+    box-shadow: 0 0 10px #ff7eb3aa;
+}
+
+/* ---------- BUTTONS ---------- */
+button, .solve-btn {
+    background: linear-gradient(90deg, #ff758c, #ff7eb3);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover, .solve-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #ff7eb366;
+}
+
+/* ---------- MATRIX TABLE ---------- */
+table {
+    border-spacing: 15px;
+}
+
+.result-box {
+    background: #00ffbb33;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+    animation: fade 0.5s ease-in;
+}

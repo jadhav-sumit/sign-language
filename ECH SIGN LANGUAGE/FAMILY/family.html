@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>FAMILY MEMBERS</title>
+        <link rel="stylesheet" href="style6.css">
+    </head>
+    <body>
+        <header>
+            <h1>FAMILY MEMBERS</h1>
+              <nav class="nav">
+            <a href="file:///C:/Users/TCP/Desktop/ECH/ECH%20SIGN%20LANGUAGE/SIGN.html">HOME</a>
+            <a href="#"></a>
+            <a href="#"></a>
+            
+         </nav>
+        </header>
+        <marquee type="scroll">Empower communication through hands learn Indians and language</marquee>
+        <section class="image-gallery">
+            <div class="image-box">
+                <img src="Aunt.jpeg" alt="A"onmouseover="playSound('Aunt')">
+                <h3>Aunt</h3>
+            </div>
+                <div class="image-box">
+                <img src="Brother.jpeg" alt="B"onmouseover="playSound('Brother')">
+                <h3>Brother</h3>
+            </div>
+            <div class="image-box">
+                <img src="Cousin.jpeg" alt="C"onmouseover="playSound('Cousin')">
+                <h3>Cousin</h3>
+            </div>
+            <div class="image-box">
+                <img src="Father.jpeg" alt="D"onmouseover="playSound('Father')">
+                <h3>Father</h3>
+            </div>
+            <div class="image-box">
+                <img src="Grandfather.jpeg" alt="E"onmouseover="playSound('Grandfather')">
+                <h3>Grandfather</h3>
+            </div>
+            <div class="image-box">
+                <img src="Grandmother.jpeg" alt="F"onmouseover="playSound('Grandmother')">
+                <h3>Grandmother</h3>
+            </div>
+            <div class="image-box">
+                <img src="Mother.jpeg" alt="G"onmouseover="playSound('Mother')">
+                <h3>Mother</h3>
+            </div>
+            <div class="image-box">
+                <img src="Sister.jpeg" alt="H"onmouseover="playSound('Sister')">
+                <h3>Sister</h3>
+            </div>
+            <div class="image-box">
+                <img src="Uncle.jpeg" alt="I"onmouseover="playSound('Uncle')">
+                <h3>Uncle</h3>
+            </div>
+           
+
+        </section>
+         <audio id="alphabetAudio"></audio>
+
+        <script>
+            function playSound(letter) {
+                let audio = document.getElementById("alphabetAudio");
+                audio.src = letter + ".mp3";   // Corrected line
+                audio.play();
+            }
+        </script>
+    </body>
+</html>

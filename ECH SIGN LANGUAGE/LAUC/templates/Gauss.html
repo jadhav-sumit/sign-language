@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gauss Elimination Calculator</title>
+    <link rel="stylesheet" href="/static/style18.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Gauss Elimination Calculator</h1>
+
+    <form id="gaussForm">
+
+        <label>Enter Matrix (each row on new line, values separated by spaces):</label>
+
+        <textarea id="matrix" name="matrix" rows="6"
+            placeholder="Example:
+2 1 -1
+-3 -1 2
+-2 1 2"></textarea>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    <div id="result" class="result"></div>
+
+</div>
+
+
+<script>
+document.getElementById("gaussForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const matrixInput = document.getElementById("matrix").value.trim();
+    if (!matrixInput) {
+        alert("Please enter matrix values.");
+        return;
+    }
+
+    const rows = matrixInput.split("\n");
+    const formData = new FormData();
+    rows.forEach(r => formData.append("matrix", r));
+
+    const res = await fetch("/gauss", {
+        method: "POST",
+        body: formData
+    });
+
+    const data = await res.json();
+
+    const box = document.getElementById("result");
+
+    if (data.error) {
+        box.innerHTML = `<p class="error">${data.error}</p>`;
+        return;
+    }
+
+    function formatMatrix(mat) {
+        return "<pre>" + mat.map(row => row.join("\t")).join("\n") + "</pre>";
+    }
+
+    let stepsHTML = "";
+    data.steps.forEach((s, index) => {
+        stepsHTML += `
+            <div class="step">
+                <h4>Step ${index + 1}: ${s.action}</h4>
+                ${formatMatrix(s.matrix)}
+            </div>
+        `;
+    });
+
+    box.innerHTML = `
+        <h2>Row Echelon Form</h2>
+        ${formatMatrix(data.row_echelon_form)}
+
+        <h2>Steps</h2>
+        ${stepsHTML}
+    `;
+});
+</script>
+
+</body>
+</html>

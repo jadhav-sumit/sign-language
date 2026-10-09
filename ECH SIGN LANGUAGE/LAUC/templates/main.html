@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3×3 Determinant Calculator</title>
+    <link rel="stylesheet" href="/static/style16.css">
+</head>
+
+<body>
+
+<div class="container">
+    <h1>3×3 Determinant Calculator</h1>
+
+    <form id="detForm">
+
+        <label>Enter Matrix (3 rows):</label>
+        <textarea id="matrix" rows="4"
+                  placeholder="1 2 3&#10;4 5 6&#10;7 8 9"></textarea>
+
+        <button type="submit">Calculate</button>
+    </form>
+
+    <div class="output" id="output"></div>
+</div>
+
+
+<script>
+document.getElementById("detForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let matrixText = document.getElementById("matrix").value.trim();
+    let rows = matrixText.split("\n");
+
+    let formData = new FormData();
+    rows.forEach(row => formData.append("matrix", row));
+
+    let response = await fetch("/determinant3", {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await response.json();
+
+    if (data.error) {
+        document.getElementById("output").innerHTML =
+            `<p class="error">${data.error}</p>`;
+    } else {
+        document.getElementById("output").innerHTML =
+            `<h2>Determinant = ${data.determinant}</h2>`;
+    }
+});
+</script>
+
+</body>
+</html>

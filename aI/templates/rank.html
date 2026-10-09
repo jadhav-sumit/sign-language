@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rankings - Math Learning</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style3.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<header class="header">
+    <h1><i class="fas fa-trophy"></i> MATH LEARNING RANKINGS</h1>
+    <nav>
+        <a href="/" class="nav-link"><i class="fas fa-home"></i> Home</a>
+        <a href="/operations" class="nav-link"><i class="fas fa-calculator"></i> Matrix Operations</a>
+        <a href="/linear" class="nav-link"><i class="fas fa-equation"></i> Linear Equations</a>
+    </nav>
+</header>
+
+<div class="main-container">
+    <div class="rankings-container">
+        <h2><i class="fas fa-chart-line"></i> Leaderboard</h2>
+        <p class="subtitle">See where you stand among other learners</p>
+        
+        <div class="rankings-controls">
+            <div class="user-info" id="userInfo">
+                <!-- User info will be loaded here -->
+            </div>
+            <button class="btn btn-primary" onclick="refreshRankings()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+        
+        <div class="rankings-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Score</th>
+                        <th>Level</th>
+                        <th>Performance</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingsBody">
+                    <!-- Rankings will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-users"></i>
+                <h3 id="totalUsers">0</h3>
+                <p>Total Learners</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <h3 id="topScore">0</h3>
+                <p>Top Score</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-graduation-cap"></i>
+                <h3 id="avgLevel">1</h3>
+                <p>Average Level</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    &copy; 2025 Math Learning. All rights reserved.
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        loadRankings();
+        checkUserSession();
+    });
+    
+    async function loadRankings() {
+        try {
+            const response = await fetch('/api/rankings');
+            if (response.ok) {
+                const data = await response.json();
+                displayRankings(data.rankings);
+                
+                // Update stats
+                document.getElementById('totalUsers').textContent = data.total_users;
+                if (data.rankings.length > 0) {
+                    document.getElementById('topScore').textContent = data.rankings[0].score;
+                    
+                    // Calculate average level
+                    const avgLevel = data.rankings.reduce((sum, user) => sum + user.level, 0) / data.rankings.length;
+                    document.getElementById('avgLevel').textContent = avgLevel.toFixed(1);
+                }
+            }
+        } catch (error) {
+            console.error('Error loading rankings:', error);
+        }
+    }
+    
+    function displayRankings(rankings) {
+        const tbody = document.getElementById('rankingsBody');
+        tbody.innerHTML = '';
+        
+        rankings.forEach((user, index) => {
+            const row = document.createElement('tr');
+            
+            // Highlight top 3 ranks
+            let rankClass = '';
+            if (index === 0) rankClass = 'gold';
+            else if (index === 1) rankClass = 'silver';
+            else if (index === 2) rankClass = 'bronze';
+            
+            row.innerHTML = `
+                <td class="rank ${rankClass}">
+                    ${index + 1}
+                    ${index < 3 ? '<i class="fas fa-crown"></i>' : ''}
+                </td>
+                <td>${user.username}</td>
+                <td class="score">${user.score}</td>
+                <td>Level ${user.level}</td>
+                <td>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${Math.min(user.score / 1000 * 100, 100)}%"></div>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+    
+    async function checkUserSession() {
+        try {
+            const response = await fetch('/api/user/progress');
+            if (response.ok) {
+                const data = await response.json();
+                displayUserInfo(data.progress);
+            } else {
+                // User not logged in
+                document.getElementById('userInfo').innerHTML = `
+                    <div class="login-prompt">
+                        <p><a href="#" onclick="showLoginModal()">Login</a> to track your progress!</p>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            console.error('Error checking session:', error);
+        }
+    }
+    
+    function displayUserInfo(progress) {
+        document.getElementById('userInfo').innerHTML = `
+            <div class="user-card">
+                <h3><i class="fas fa-user"></i> Your Stats</h3>
+                <p><strong>Score:</strong> ${progress.score}</p>
+                <p><strong>Level:</strong> ${progress.level}</p>
+                <p><strong>Correct Answers:</strong> ${progress.correct_answers}/${progress.quizzes_completed}</p>
+            </div>
+        `;
+    }
+    
+    function refreshRankings() {
+        loadRankings();
+    }
+    
+    function showLoginModal() {
+        // Implement login modal
+        alert('Login feature coming soon!');
+    }
+</script>
+</body>
+</html>

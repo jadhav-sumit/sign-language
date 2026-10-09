@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Inverse Calculator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Matrix Inverse Calculator</h1>
+
+    <form id="matrixForm">
+        <label>Enter Square Matrix (each row separated by spaces):</label>
+
+        <textarea name="matrix" id="matrix" rows="5" placeholder="Example for 3×3:
+1 2 3
+4 5 6
+7 8 9"></textarea>
+
+        <button type="submit">Calculate Inverse</button>
+    </form>
+
+    <div class="result" id="result"></div>
+</div>
+
+<script>
+document.getElementById("matrixForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    let matrixText = document.getElementById("matrix").value.trim();
+    if (!matrixText) {
+        alert("Please enter a matrix.");
+        return;
+    }
+
+    // Split lines into rows
+    let rows = matrixText.split("\n");
+    let matrix = rows.map(r => r.trim());
+
+    let formData = new FormData();
+    matrix.forEach(r => formData.append("matrix", r));
+
+    let response = await fetch("/inverse", {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await response.json();
+
+    let box = document.getElementById("result");
+
+    if (data.error) {
+        box.innerHTML = `<p class="error">${data.error}</p>`;
+        return;
+    }
+
+    function formatMatrix(mat) {
+        return "<pre>" + mat.map(r => r.join("\t")).join("\n") + "</pre>";
+    }
+
+    box.innerHTML = `
+        <h2>Results</h2>
+
+        <h3>Determinant:</h3>
+        <pre>${data.determinant}</pre>
+
+        <h3>Adjoint:</h3>
+        ${formatMatrix(data.adjoint)}
+
+        <h3>Inverse:</h3>
+        ${formatMatrix(data.inverse)}
+    `;
+});
+</script>
+
+</body>
+</html>

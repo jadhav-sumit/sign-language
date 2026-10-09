@@ -1,0 +1,226 @@
+/* ---- GLOBAL ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background: linear-gradient(135deg, #88D3CE, #6E45E2);
+    color: #222;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---- HEADER ---- */
+.header {
+    background: rgba(255,255,255,0.85);
+    text-align: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #4B2FE3;
+    font-weight: 700;
+    text-align: left;
+}
+
+/* ---- MAIN CONTAINER ---- */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 1;
+    gap: 40px;
+    width: 90%;
+    margin: 30px auto;
+}
+
+/* ---- LEFT CONTENT ---- */
+.content-left {
+    flex: 2;
+}
+
+.section {
+    background: rgba(255,255,255,0.95);
+    border-left: 6px solid #4B2FE3;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+}
+
+.section:hover {
+    transform: translateY(-5px);
+    border-left-color: #FF9900;
+}
+
+.section h2, .section h3 {
+    color: #4B2FE3;
+    margin-bottom: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.section p {
+    color: #333;
+    font-size: 16px;
+}
+
+/* ---- RIGHT LOGIN FORM ---- */
+.content-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.login-form {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 25px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    text-align: center;
+    transition: 0.3s ease;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+    color: #4B2FE3;
+}
+
+.login-form input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.login-form button {
+    width: 95%;
+    padding: 10px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(45deg, #4B2FE3, #FF9900);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.login-form button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* ---- CREATE ACCOUNT LINK ---- */
+.create-account {
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+.create-account a {
+    color: #4B2FE3;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
+
+/* ---- SOCIAL LOGIN BUTTONS ---- */
+.social-login {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-login button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    padding: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    width: 50px;
+    height: 50px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.social-login button img {
+    width: 24px;
+    height: 24px;
+}
+
+/* Hover Effects */
+.social-login .google:hover {
+    background: #f8f8f8;
+    transform: scale(1.1);
+}
+
+.social-login .facebook {
+    background: #1877f2;
+}
+
+.social-login .facebook:hover {
+    background: #0f61d0;
+    transform: scale(1.1);
+}
+
+.social-login .twitter {
+    background: #1da1f2;
+}
+
+.social-login .twitter:hover {
+    background: #0c85d0;
+    transform: scale(1.1);
+}
+
+/* ---- FOOTER ---- */
+.footer {
+
+    text-align: center;
+    padding: 15px 0;
+    color: #4B2FE3;
+    font-weight: 600;
+    flex-shrink: 0;
+    position: absolute;
+    bottom: 5px;
+    left: 35%;
+}
+
+/* ---- RESPONSIVE ---- */
+@media(max-width: 980px) {
+    .main-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content-left, .content-right {
+        width: 95%;
+    }
+
+    .login-form {
+        max-width: 100%;
+    }
+}

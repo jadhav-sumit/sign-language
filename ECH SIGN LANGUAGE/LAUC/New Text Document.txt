@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rank of Matrix Solver</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        input { padding: 5px; width: 70px; text-align: center; }
+        button { padding: 8px 15px; margin-top: 10px; }
+        #matrixBox { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<h2>Rank of Matrix Calculator</h2>
+
+<label>Enter number of rows (m): </label>
+<input type="number" id="rows" min="1">
+<br><br>
+
+<label>Enter number of columns (n): </label>
+<input type="number" id="cols" min="1">
+<br><br>
+
+<button onclick="createMatrix()">Create Matrix</button>
+
+<div id="matrixBox"></div>
+
+<h3 id="output"></h3>
+
+<script>
+// Step 1: Create matrix input boxes dynamically
+function createMatrix() {
+    let r = document.getElementById("rows").value;
+    let c = document.getElementById("cols").value;
+
+    if (r <= 0 || c <= 0) {
+        alert("Invalid matrix size!");
+        return;
+    }
+
+    let box = document.getElementById("matrixBox");
+    box.innerHTML = "<h3>Enter Matrix Elements:</h3>";
+
+    let table = "<table>";
+
+    for (let i = 0; i < r; i++) {
+        table += "<tr>";
+        for (let j = 0; j < c; j++) {
+            table += `<td><input type='number' id='cell-${i}-${j}'></td>`;
+        }
+        table += "</tr>";
+    }
+
+    table += "</table>";
+    box.innerHTML += table;
+
+    box.innerHTML += `<br><button onclick="solveRank()">Find Rank</button>`;
+}
+
+// Step 2: Collect matrix and send to backend
+function solveRank() {
+    let r = document.getElementById("rows").value;
+    let c = document.getElementById("cols").value;
+
+    let matrix = [];
+
+    for (let i = 0; i < r; i++) {
+        let row = [];
+        for (let j = 0; j < c; j++) {
+            row.push(
+                parseFloat(document.getElementById(`cell-${i}-${j}`).value || 0)
+            );
+        }
+        matrix.push(row);
+    }
+
+    fetch("http://localhost:5000/rank", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matrix: matrix })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("output").innerHTML =
+            "Rank of Matrix = <b>" + data.rank + "</b>";
+    })
+    .catch(error => {
+        document.getElementById("output").innerHTML = "Error: " + error;
+    });
+}
+</script>
+
+</body>
+</html>
+<img src="{{ url_for('static', filename='images/photo.png') }}" alt="Image">
+

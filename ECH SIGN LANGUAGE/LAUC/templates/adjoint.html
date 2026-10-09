@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Adjoint Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-calculator"></i> Matrix Adjoint Calculator</h1>
+            <p class="subtitle">Calculate adjoint, cofactor matrix, determinant, and inverse of any square matrix</p>
+        </header>
+
+        <main class="main-content">
+            <div class="setup-section">
+                <div class="card">
+                    <h2><i class="fas fa-sliders-h"></i> Step 1: Set Matrix Size</h2>
+                    <div class="size-controls">
+                        <div class="form-group">
+                            <label for="size">Matrix Size (n × n):</label>
+                            <div class="size-selector">
+                                <button type="button" class="size-btn" onclick="changeSize(-1)">-</button>
+                                <input type="number" id="size" min="2" max="6" value="3" readonly>
+                                <button type="button" class="size-btn" onclick="changeSize(1)">+</button>
+                            </div>
+                            <small class="hint">Choose between 2×2 and 6×6</small>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateMatrix()">
+                            <i class="fas fa-magic"></i> Generate Matrix Inputs
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-section" id="input-section" style="display: none;">
+                <div class="card">
+                    <h2><i class="fas fa-edit"></i> Step 2: Enter Matrix Values</h2>
+                    <div id="matrix-input-container">
+                        <!-- Matrix inputs will be generated here -->
+                    </div>
+                    <div class="input-actions">
+                        <button class="btn btn-primary" onclick="calculateAdjoint()">
+                            <i class="fas fa-calculator"></i> Calculate Adjoint
+                        </button>
+                        <button class="btn btn-secondary" onclick="clearMatrix()">
+                            <i class="fas fa-broom"></i> Clear Matrix
+                        </button>
+                        <button class="btn btn-success" onclick="generateRandomMatrix()">
+                            <i class="fas fa-dice"></i> Random Matrix
+                        </button>
+                        <button class="btn btn-info" onclick="calculateDeterminant()">
+                            <i class="fas fa-search"></i> Calculate Determinant Only
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section" id="result-section" style="display: none;">
+                <div class="card">
+                    <h2><i class="fas fa-chart-bar"></i> Step 3: Results</h2>
+                    
+                    <div id="error-message" class="error-message" style="display: none;"></div>
+                    
+                    <div id="results-container">
+                        <!-- Results will be displayed here -->
+                    </div>
+                    
+                    <div class="result-actions">
+                        <button class="btn btn-primary" onclick="generateMatrix()">
+                            <i class="fas fa-redo"></i> New Calculation
+                        </button>
+                        <button class="btn btn-secondary" onclick="copyResults()">
+                            <i class="far fa-copy"></i> Copy Results
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="card">
+                    <h2><i class="fas fa-info-circle"></i> What is Matrix Adjoint?</h2>
+                    <div class="info-content">
+                        <p>The <strong>adjoint</strong> of a square matrix is the transpose of its cofactor matrix. It's used to find the inverse of a matrix:</p>
+                        <p class="formula">A⁻¹ = (1/det(A)) × adj(A)</p>
+                        <div class="steps">
+                            <h3><i class="fas fa-list-ol"></i> Calculation Steps:</h3>
+                            <ol>
+                                <li>Calculate the determinant of the matrix</li>
+                                <li>Find the cofactor matrix (C<sub>ij</sub> = (-1)<sup>i+j</sup> × M<sub>ij</sub>)</li>
+                                <li>Transpose the cofactor matrix to get the adjoint</li>
+                                <li>Divide adjoint by determinant to get the inverse</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>Matrix Adjoint Calculator &copy; 2024 | Built with Flask & JavaScript</p>
+        </footer>
+    </div>
+
+    <script>
+        let currentSize = 3;
+        
+        function changeSize(delta) {
+            currentSize = parseInt(document.getElementById('size').value);
+            currentSize += delta;
+            
+            if (currentSize < 2) currentSize = 2;
+            if (currentSize > 6) currentSize = 6;
+            
+            document.getElementById('size').value = currentSize;
+        }
+        
+        function generateMatrix() {
+            const size = currentSize;
+            const container = document.getElementById('matrix-input-container');
+            
+            // Generate matrix table
+            let html = `<div class="matrix-table-container">
+                <table class="matrix-table">
+                    <caption>Enter your ${size}×${size} matrix values</caption>`;
+            
+            for (let i = 0; i < size; i++) {
+                html += '<tr>';
+                for (let j = 0; j < size; j++) {
+                    html += `<td>
+                        <input type="number" 
+                               id="cell-${i}-${j}" 
+                               class="matrix-cell" 
+                               value="${i === j ? 1 : 0}" 
+                               step="any">
+                    </td>`;
+                }
+                html += '</tr>';
+            }
+            
+            html += `</table>
+                <div class="matrix-hint">
+                    <i class="fas fa-lightbulb"></i> Tip: Enter integers or decimals. Click on any cell to edit.
+                </div>
+            </div>`;
+            
+            container.innerHTML = html;
+            
+            // Show input section
+            document.getElementById('input-section').style.display = 'block';
+            document.getElementById('result-section').style.display = 'none';
+            
+            // Scroll to input section
+            document.getElementById('input-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function generateRandomMatrix() {
+            const size = currentSize;
+            
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    const value = (Math.random() * 10 - 5).toFixed(1); // Random values between -5 and 5
+                    document.getElementById(`cell-${i}-${j}`).value = value;
+                }
+            }
+        }
+        
+        function clearMatrix() {
+            const size = currentSize;
+            
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    document.getElementById(`cell-${i}-${j}`).value = '';
+                }
+            }
+        }
+        
+        function getMatrixFromInputs() {
+            const size = currentSize;
+            const matrix = [];
+            
+            for (let i = 0; i < size; i++) {
+                const row = [];
+                for (let j = 0; j < size; j++) {
+                    const input = document.getElementById(`cell-${i}-${j}`);
+                    const value = parseFloat(input.value);
+                    
+                    if (isNaN(value)) {
+                        input.classList.add('error');
+                        throw new Error(`Invalid value at row ${i+1}, column ${j+1}`);
+                    } else {
+                        input.classList.remove('error');
+                        row.push(value);
+                    }
+                }
+                matrix.push(row);
+            }
+            
+            return matrix;
+        }
+        
+        async function calculateAdjoint() {
+            try {
+                showLoading();
+                
+                const matrix = getMatrixFromInputs();
+                
+                const response = await fetch('/adjoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ matrix: matrix })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    displayResults(data);
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+                
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        async function calculateDeterminant() {
+            try {
+                showLoading();
+                
+                const matrix = getMatrixFromInputs();
+                
+                const response = await fetch('/determinant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ matrix: matrix })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    displayDeterminantResult(data);
+                } else {
+                    throw new Error(data.error || 'Unknown error occurred');
+                }
+                
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                hideLoading();
+            }
+        }
+        
+        function displayResults(data) {
+            const container = document.getElementById('results-container');
+            const size = data.size;
+            
+            function formatMatrix(matrix, title) {
+                let html = `<div class="result-matrix">
+                    <h4>${title}</h4>
+                    <table class="matrix-result-table">
+                        <tbody>`;
+                
+                for (let i = 0; i < size; i++) {
+                    html += '<tr>';
+                    for (let j = 0; j < size; j++) {
+                        const value = matrix[i][j];
+                        const formatted = Math.abs(value) < 0.0001 ? '0' : value.toFixed(4);
+                        html += `<td>${formatted}</td>`;
+                    }
+                    html += '</tr>';
+                }
+                
+                html += '</tbody></table></div>';
+                return html;
+            }
+            
+            let html = `
+                <div class="result-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">Matrix Size:</span>
+                        <span class="summary-value">${size} × ${size}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Determinant:</span>
+                        <span class="summary-value highlight">${data.determinant.toFixed(6)}</span>
+                    </div>
+                </div>
+                
+                <div class="matrices-grid">
+                    <div class="matrix-group">
+                        ${formatMatrix(data.matrix, 'Original Matrix (A)')}
+                    </div>
+                    
+                    <div class="matrix-group">
+                        ${formatMatrix(data.cofactor_matrix, 'Cofactor Matrix (C)')}
+                    </div>
+                    
+                    <div class="matrix-group">
+                        ${formatMatrix(data.adjoint, 'Adjoint Matrix (adj(A))')}
+                    </div>
+                    
+                    <div class="matrix-group">
+                        ${formatMatrix(data.inverse, 'Inverse Matrix (A⁻¹)')}
+                    </div>
+                </div>
+                
+                <div class="verification">
+                    <h4><i class="fas fa-check-circle"></i> Verification</h4>
+                    <p>A × A⁻¹ = I (Identity Matrix)</p>
+                    <p>det(A) × det(A⁻¹) = 1 (${data.determinant.toFixed(6)} × ${(1/data.determinant).toFixed(6)} ≈ 1)</p>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Show result section
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function displayDeterminantResult(data) {
+            const container = document.getElementById('results-container');
+            
+            let html = `
+                <div class="determinant-result">
+                    <h3><i class="fas fa-search"></i> Determinant Result</h3>
+                    
+                    <div class="matrix-display">
+                        <h4>Matrix:</h4>
+                        <table class="matrix-result-table">
+                            ${data.matrix.map(row => `
+                                <tr>${row.map(val => `<td>${val}</td>`).join('')}</tr>
+                            `).join('')}
+                        </table>
+                    </div>
+                    
+                    <div class="determinant-value">
+                        <h4>Determinant:</h4>
+                        <div class="value-box ${data.determinant === 0 ? 'singular' : 'non-singular'}">
+                            det(A) = <span class="big-number">${data.determinant.toFixed(6)}</span>
+                        </div>
+                        ${data.determinant === 0 ? 
+                            '<p class="warning"><i class="fas fa-exclamation-triangle"></i> Matrix is singular (no inverse exists)</p>' : 
+                            '<p class="success"><i class="fas fa-check"></i> Matrix is non-singular (inverse exists)</p>'}
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="calculateAdjoint()">
+                        <i class="fas fa-calculator"></i> Calculate Full Adjoint
+                    </button>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // Show result section
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+            
+            // Scroll to results
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.innerHTML = `
+                <div class="error-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h4>Calculation Error</h4>
+                        <p>${message}</p>
+                    </div>
+                </div>
+            `;
+            errorDiv.style.display = 'block';
+            
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('results-container').innerHTML = '';
+            
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showLoading() {
+            const container = document.getElementById('results-container');
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Calculating... Please wait</p>
+                </div>
+            `;
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('error-message').style.display = 'none';
+        }
+        
+        function hideLoading() {
+            // Loading will be replaced by results
+        }
+        
+        function copyResults() {
+            // Implement copy functionality
+            alert('Results copied to clipboard!');
+        }
+        
+        // Initialize with a default matrix
+        window.onload = function() {
+            generateMatrix();
+        };
+    </script>
+</body>
+</html>

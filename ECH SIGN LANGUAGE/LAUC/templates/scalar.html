@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalar Matrix Multiplication</title>
+    <link rel="stylesheet" href="/static/style12.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="title">Scalar Matrix Multiplication</h1>
+
+    <form id="scalarForm">
+
+        <div class="input-group">
+            <label>Enter Scalar Value:</label>
+            <input type="number" step="any" id="scalar" required>
+        </div>
+
+        <div class="input-group">
+            <label>Enter Matrix (row by row):</label>
+            <textarea id="matrix" required placeholder="Example:
+1 2 3
+4 5 6"></textarea>
+        </div>
+
+        <button type="submit" class="btn">Calculate</button>
+    </form>
+
+    <div class="output" id="output"></div>
+
+</div>
+
+<script>
+document.getElementById("scalarForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const scalar = document.getElementById("scalar").value.trim();
+    const matrixText = document.getElementById("matrix").value.trim();
+
+    const matrix = matrixText.split("\n");
+
+    const response = await fetch("/scalar_mul", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            scalar: scalar,
+            matrix: matrix
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+        document.getElementById("output").innerHTML =
+            `<p class='error'>${data.error}</p>`;
+        return;
+    }
+
+    document.getElementById("output").innerHTML = `
+        <h2>Result:</h2>
+        <pre>${JSON.stringify(data.result, null, 4)}</pre>
+    `;
+});
+</script>
+
+</body>
+</html>

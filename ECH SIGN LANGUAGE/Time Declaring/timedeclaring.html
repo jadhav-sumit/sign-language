@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>Time Declaring</title>
+        <link rel="stylesheet" href="style1.css">
+    </head>
+    <body>
+        <header>
+            <h1>Time Declaring</h1>
+              <nav class="nav">
+            <a href="file:///C:/Users/TCP/Desktop/ECH/ECH%20SIGN%20LANGUAGE/SIGN.html">HOME</a>
+            <a href="#"></a>
+            <a href="#"></a>
+            
+         </nav>
+        </header>
+        <marquee type="scroll">Empower communication through hands learn Indians and language</marquee>
+        <section class="image-gallery">
+            <div class="image-box">
+                <img src="Calendar.jpg" alt="Calendar"onmouseover="playSound('Calendar')">
+                <h3>Calendar</h3>
+            </div>
+                <div class="image-box">
+                <img src="Later.jpg" alt="Later"onmouseover="playSound('Later')">
+                <h3>Later</h3>
+            </div>
+            <div class="image-box">
+                <img src="Now.jpg" alt="Now"onmouseover="playSound('Now')">
+                <h3>Now</h3>
+            </div>
+            <div class="image-box">
+                <img src="Time.jpg" alt="Time"onmouseover="playSound('Time')">
+                <h3>Time</h3>
+            </div>
+            <div class="image-box">
+                <img src="Today.jpg" alt="Today"onmouseover="playSound('Today')">
+                <h3>Today</h3>
+            </div>
+            <div class="image-box">
+                <img src="Tomorrow.jpg" alt="Tomorrow"onmouseover="playSound('Tomorrow')">
+                <h3>Tomorrow</h3>
+            </div>
+            <div class="image-box">
+                <img src="Yesterday.jpg" alt="Yesterday"onmouseover="playSound('Yesterday')">
+                <h3>Yesterday</h3>
+            </div>
+           
+        </section>
+         <audio id="alphabetAudio"></audio>
+
+        <script>
+            function playSound(letter) {
+                let audio = document.getElementById("alphabetAudio");
+                audio.src = letter + ".mp3";   // Corrected line
+                audio.play();
+            }
+        </script>
+    </body>
+</html>

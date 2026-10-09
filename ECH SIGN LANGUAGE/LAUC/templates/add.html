@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Addition Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Matrix Addition Calculator</h1>
+        
+        {% if error %}
+        <div class="error">
+            <p>Error: {{ error }}</p>
+        </div>
+        {% endif %}
+        
+        <div class="setup-form">
+            <h2>Step 1: Set Matrix Dimensions</h2>
+            <div id="dimension-form">
+                <div class="form-group">
+                    <label for="rows">Number of Rows:</label>
+                    <input type="number" id="rows" name="rows" min="1" max="10" value="2" required>
+                </div>
+                <div class="form-group">
+                    <label for="cols">Number of Columns:</label>
+                    <input type="number" id="cols" name="cols" min="1" max="10" value="2" required>
+                </div>
+                <button type="button" onclick="generateMatrixInputs()">Generate Matrix Inputs</button>
+            </div>
+        </div>
+        
+        <div class="matrix-input" id="matrix-input-section" style="display: none;">
+            <h2>Step 2: Enter Matrix Values</h2>
+            <form method="POST" action="/add" id="matrix-form">
+                <input type="hidden" id="form-rows" name="rows">
+                <input type="hidden" id="form-cols" name="cols">
+                
+                <div class="matrices-container">
+                    <div class="matrix">
+                        <h3>Matrix A</h3>
+                        <div id="matrix-a-container"></div>
+                    </div>
+                    
+                    <div class="plus-sign">
+                        <span>+</span>
+                    </div>
+                    
+                    <div class="matrix">
+                        <h3>Matrix B</h3>
+                        <div id="matrix-b-container"></div>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="submit">Calculate Addition</button>
+                    <button type="button" onclick="clearMatrices()">Clear</button>
+                </div>
+            </form>
+        </div>
+        
+        {% if result %}
+        <div class="result">
+            <h2>Step 3: Result (Matrix C = A + B)</h2>
+            <div class="matrices-container">
+                <div class="matrix">
+                    <h3>Matrix A</h3>
+                    <div class="matrix-display">
+                        {% for i in range(rows) %}
+                        <div class="matrix-row">
+                            {% for j in range(cols) %}
+                            <span class="matrix-cell">{{ matrix_a[i][j] }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="plus-sign">
+                    <span>+</span>
+                </div>
+                
+                <div class="matrix">
+                    <h3>Matrix B</h3>
+                    <div class="matrix-display">
+                        {% for i in range(rows) %}
+                        <div class="matrix-row">
+                            {% for j in range(cols) %}
+                            <span class="matrix-cell">{{ matrix_b[i][j] }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="equals-sign">
+                    <span>=</span>
+                </div>
+                
+                <div class="matrix">
+                    <h3>Matrix C (Result)</h3>
+                    <div class="matrix-display result-matrix">
+                        {% for i in range(rows) %}
+                        <div class="matrix-row">
+                            {% for j in range(cols) %}
+                            <span class="matrix-cell">{{ result[i][j] }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="window.location.href='/add'" class="new-calculation">New Calculation</button>
+        </div>
+        {% endif %}
+    </div>
+    
+    <script>
+        function generateMatrixInputs() {
+            const rows = parseInt(document.getElementById('rows').value);
+            const cols = parseInt(document.getElementById('cols').value);
+            
+            if (rows < 1 || cols < 1 || rows > 10 || cols > 10) {
+                alert('Please enter values between 1 and 10');
+                return;
+            }
+            
+            // Set hidden form values
+            document.getElementById('form-rows').value = rows;
+            document.getElementById('form-cols').value = cols;
+            
+            // Generate Matrix A inputs
+            const matrixAContainer = document.getElementById('matrix-a-container');
+            matrixAContainer.innerHTML = '';
+            
+            for (let i = 0; i < rows; i++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'matrix-row';
+                
+                for (let j = 0; j < cols; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.name = `A${i}${j}`;
+                    input.id = `A${i}${j}`;
+                    input.value = 0;
+                    input.className = 'matrix-cell-input';
+                    input.required = true;
+                    rowDiv.appendChild(input);
+                }
+                
+                matrixAContainer.appendChild(rowDiv);
+            }
+            
+            // Generate Matrix B inputs
+            const matrixBContainer = document.getElementById('matrix-b-container');
+            matrixBContainer.innerHTML = '';
+            
+            for (let i = 0; i < rows; i++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'matrix-row';
+                
+                for (let j = 0; j < cols; j++) {
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.name = `B${i}${j}`;
+                    input.id = `B${i}${j}`;
+                    input.value = 0;
+                    input.className = 'matrix-cell-input';
+                    input.required = true;
+                    rowDiv.appendChild(input);
+                }
+                
+                matrixBContainer.appendChild(rowDiv);
+            }
+            
+            // Show the matrix input section
+            document.getElementById('matrix-input-section').style.display = 'block';
+            
+            // Scroll to matrix inputs
+            document.getElementById('matrix-input-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function clearMatrices() {
+            document.getElementById('matrix-a-container').innerHTML = '';
+            document.getElementById('matrix-b-container').innerHTML = '';
+            document.getElementById('matrix-input-section').style.display = 'none';
+            document.getElementById('rows').value = 2;
+            document.getElementById('cols').value = 2;
+            document.getElementById('form-rows').value = '';
+            document.getElementById('form-cols').value = '';
+        }
+        
+        // Auto-generate if we have result data
+        window.onload = function() {
+            {% if result %}
+            // Set dimension inputs from result data
+            document.getElementById('rows').value = {{ rows }};
+            document.getElementById('cols').value = {{ cols }};
+            
+            // Generate the matrix inputs
+            generateMatrixInputs();
+            
+            // Fill with existing values
+            {% for i in range(rows) %}
+                {% for j in range(cols) %}
+                    document.getElementById('A{{i}}{{j}}').value = {{ matrix_a[i][j] }};
+                    document.getElementById('B{{i}}{{j}}').value = {{ matrix_b[i][j] }};
+                {% endfor %}
+            {% endfor %}
+            {% endif %}
+        }
+    </script>
+</body>
+</html>
